@@ -70,6 +70,7 @@ void	raycast(t_player pl, t_data *win, int world_map[MW][MH])
 		ray_dir = va(vm(pl.cam_plane, x_norm), pl.dir);
 		map_x = (int)pl.pos.x;
 		map_y = (int)pl.pos.y;
+
 		delta_dist.x = fabs(1 / ray_dir.x);
 		delta_dist.y = fabs(1 / ray_dir.y);
 		hit = 0;
@@ -121,8 +122,7 @@ void	raycast(t_player pl, t_data *win, int world_map[MW][MH])
 			col.integer = 0xffff00; //yellow
 		if (side == 1)
 			col.integer /= 2;
-		if (draw_end > 0)
-			breth_vertical(x, draw_start, draw_end, col, win);
+		breth_vertical(x, draw_start, draw_end, col, win);
 	}
 	mlx_put_image_to_window(win->mlx_p, win->mlx_nw, win->mlx_img, 0, 0);
 	mlx_loop(win->mlx_p);
@@ -162,8 +162,8 @@ int		main(void)
 	// double		time = 0;
 	// double		old_time = 0;
 
-	pl.pos.x = 2;
-	pl.pos.y = 1;
+	pl.pos.x = 22;
+	pl.pos.y = 12;
 	pl.dir.x = -1;
 	pl.dir.y = 0;
 	pl.cam_plane.x = 0;
