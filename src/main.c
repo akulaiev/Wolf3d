@@ -70,7 +70,6 @@ void	raycast(t_player pl, t_data *win, int world_map[MW][MH])
 		ray_dir = va(vm(pl.cam_plane, x_norm), pl.dir);
 		map_x = (int)pl.pos.x;
 		map_y = (int)pl.pos.y;
-
 		delta_dist.x = fabs(1 / ray_dir.x);
 		delta_dist.y = fabs(1 / ray_dir.y);
 		hit = 0;
