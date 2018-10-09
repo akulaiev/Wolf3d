@@ -35,9 +35,9 @@ t_dot	vr(t_dot vec, double angle)
 	double	angle_rad;
 	t_dot	res;
 
-	angle_rad = angle * PI / 180;
-	res.x = x * cos(angle_rad) - y * sin(angle_rad);
-	res.y = x * sin(angle_rad) + cos(angle_rad);
+	angle_rad = angle * (M_PI / 180);
+	res.x = vec.x * cos(angle_rad) - vec.y * sin(angle_rad);
+	res.y = vec.x * sin(angle_rad) + cos(angle_rad);
 	return (res);
 }
 

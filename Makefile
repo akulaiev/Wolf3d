@@ -26,7 +26,7 @@ MLX_PATH = ./minilibx_macos/
 
 vpath %.c $(SRC_PATH)
 
-SOURCE = main.c
+SOURCE = main.c draw_the_line.c vector_manipulate.c vector_operations.c
 
 O_FILES = $(addprefix $(SRC_PATH), $(SOURCE:.c=.o))
 
@@ -39,11 +39,11 @@ LIBS:
 	make -C $(MLX_PATH)
 	make -C $(LIBFT_PATH)
 
-%.o: %.c $(INC_PATH)/rtv1.h
+%.o: %.c $(INC_PATH)/wolf3d.h
 	$(CC) $(CFLAGS) -I $(INC_PATH) -c $< -o $@
 
 exe:
-	./$(NAME) scenes/full_scene.rtv
+	./$(NAME)
 
 clean:
 	make -C $(LIBFT_PATH) clean

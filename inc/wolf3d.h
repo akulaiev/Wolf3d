@@ -12,8 +12,8 @@
 
 #ifndef WOLF3D_H
 # define WOLF3D_H
-# define MW 31
-# define MH 31
+# define MW 24
+# define MH 24
 
 # include <stdlib.h>
 # include <fcntl.h>
@@ -24,6 +24,20 @@
 # include <pthread.h>
 # include <sys/types.h>
 # include <unistd.h>
+
+typedef struct	s_color
+{
+	unsigned char	r;
+	unsigned char	g;
+	unsigned char	b;
+	unsigned char	a;
+}				t_color;
+
+typedef union	u_col
+{
+	unsigned int	integer;
+	t_color			struct_col;
+}				t_col;
 
 typedef struct	s_data
 {
@@ -51,6 +65,39 @@ typedef struct	s_player
 	t_dot			cam_plane;
 }				t_player;
 
+
+typedef struct	s_breth
+{
+	int		dx;
+	int		dy;
+	int		dx2;
+	int		dy2;
+	int		leng_x;
+	int		leng_y;
+	int		length;
+	int		x_inc;
+	int		y_inc;
+	int		x;
+	int		y;
+	int		d1;
+	int		len_x;
+	int		len_y;
+}				t_breth;
+
+typedef	struct	s_gradient
+{
+	int		start_r;
+	int		start_g;
+	int		start_b;
+	int		end_r;
+	int		end_g;
+	int		end_b;
+	int		res_r;
+	int		res_g;
+	int		res_b;
+}				t_gradient;
+
+
 t_dot			va(t_dot first, t_dot second);
 t_dot			vmn(t_dot first, t_dot second);
 t_dot			vm(t_dot first, double val);
@@ -59,5 +106,7 @@ double			vs(t_dot first, t_dot second);
 t_dot			vr(t_dot vec, double angle);
 void			normalize(t_dot *ray);
 void			img_pixel_put(t_data *win, int x, int y, int col);
+
+void			breth_vertical(int x, int y_start, int y_end, t_col col, t_data *win);
 
 #endif
