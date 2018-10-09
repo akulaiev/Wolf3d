@@ -162,12 +162,12 @@ int		main(void)
 	// double		time = 0;
 	// double		old_time = 0;
 
-	pl.pos.x = 22;
-	pl.pos.y = 12;
+	pl.pos.x = 2;
+	pl.pos.y = 1;
 	pl.dir.x = -1;
 	pl.dir.y = 0;
 	pl.cam_plane.x = 0;
-	pl.cam_plane.y = -0.65;
+	pl.cam_plane.y = 0.65;
 	win.ww = 800;
 	win.wh = 512;
 	open_win(&win);
