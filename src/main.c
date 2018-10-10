@@ -13,38 +13,7 @@
 #include "wolf3d.h"
 #include <stdio.h>
 
-static int	exit_x(void)
-{
-	exit(0);
-}
-
-int			key_react(int keycode, void *param)
-{
-	param = NULL;
-	if (keycode == 53)
-		exit(0);
-	return (0);
-}
-
-void		open_win(t_data *win)
-{
-	win->mlx_p = mlx_init();
-	win->mlx_nw = mlx_new_window(win->mlx_p, win->ww, win->wh, "Test");
-	win->mlx_img = mlx_new_image(win->mlx_p, win->ww, win->wh);
-	win->img_ptr = mlx_get_data_addr(win->mlx_img,
-	&win->bits_per_pixel, &win->size_line, &win->endian);
-	mlx_hook(win->mlx_nw, 2, 5, key_react, (void*)win);
-	mlx_hook(win->mlx_nw, 17, 1L << 17, exit_x, (void*)win);
-}
-
-void		img_pixel_put(t_data *win, int x, int y, int col)
-{
-	if (x < win->ww && y < win->wh && x >= 0 && y >= 0)
-		*(int*)(win->img_ptr + (x * (win->bits_per_pixel >> 3) +
-		y * win->size_line)) = col;
-}
-
-void	raycast(t_player pl, t_data *win, int world_map[MW][MH])
+void	raycast(t_data *win)
 {
 	int		x;
 	double	x_norm;
@@ -62,25 +31,30 @@ void	raycast(t_player pl, t_data *win, int world_map[MW][MH])
 	int		draw_start;
 	int		draw_end;
 	t_col	col;
+	double	time;
+	double	old_time;
+	double	frame_time;
 
 	x = -1;
+	time = 0;
+	old_time = 0;
 	while (++x < win->ww)
 	{
 		x_norm = 2 * x / (double)win->ww - 1;
-		ray_dir = va(vm(pl.cam_plane, x_norm), pl.dir);
-		map_x = (int)pl.pos.x;
-		map_y = (int)pl.pos.y;
+		ray_dir = va(vm(win->pl->cam_plane, x_norm), win->pl->dir);
+		map_x = (int)win->pl->pos.x;
+		map_y = (int)win->pl->pos.y;
 		delta_dist.x = fabs(1 / ray_dir.x);
 		delta_dist.y = fabs(1 / ray_dir.y);
 		hit = 0;
 		if (ray_dir.x < 0 && (step_x = -1))
-			side_dist.x = (pl.pos.x - map_x) * delta_dist.x;
+			side_dist.x = (win->pl->pos.x - map_x) * delta_dist.x;
 		if (ray_dir.x >= 0 && (step_x = 1))
-			side_dist.x = (map_x + 1 - pl.pos.x) * delta_dist.x;
+			side_dist.x = (map_x + 1 - win->pl->pos.x) * delta_dist.x;
 		if (ray_dir.y < 0 && (step_y = -1))
-			side_dist.y = (pl.pos.y - map_y) * delta_dist.y;
+			side_dist.y = (win->pl->pos.y - map_y) * delta_dist.y;
 		if (ray_dir.y >= 0 && (step_y = 1))
-			side_dist.y = (map_y + 1 - pl.pos.y) * delta_dist.y;
+			side_dist.y = (map_y + 1 - win->pl->pos.y) * delta_dist.y;
 		while (!hit)
 		{
 			if (side_dist.x < side_dist.y)
@@ -95,41 +69,49 @@ void	raycast(t_player pl, t_data *win, int world_map[MW][MH])
 				map_y += step_y;
 				side = 1;
 			}
-			if (world_map[map_x][map_y] > 0)
+			if (win->world_map[map_x][map_y] > 0)
 				hit = 1;
 		}
 		if (!side)
-			perp_wall_dist = (map_x - pl.pos.x + (1 - step_x) / 2) / ray_dir.x;
+			perp_wall_dist = (map_x - win->pl->pos.x + (1 - step_x) / 2) / ray_dir.x;
 		else
-			perp_wall_dist = (map_y - pl.pos.y + (1 - step_y) / 2) / ray_dir.y;
-		line_h = (int)(win->wh / perp_wall_dist);
+			perp_wall_dist = (map_y - win->pl->pos.y + (1 - step_y) / 2) / ray_dir.y;
+		line_h = (int)((double)win->wh / perp_wall_dist);
 		draw_start = -line_h / 2 + win->wh / 2;
 		if (draw_start < 0)
 			draw_start = 0;
 		draw_end = line_h / 2 + win->wh / 2;
 		if(draw_end >= win->wh)
 			draw_end = win->wh - 1;
-		if (world_map[map_x][map_y] == 1)
+		if (win->world_map[map_x][map_y] == 1)
 			col.integer = 0xff0000; //red
-		if (world_map[map_x][map_y] == 2)
+		if (win->world_map[map_x][map_y] == 2)
 			col.integer = 0x00ff00; //green
-		if (world_map[map_x][map_y] == 3)
+		if (win->world_map[map_x][map_y] == 3)
 			col.integer = 0x0000ff; //blue
-		if (world_map[map_x][map_y] == 4)
+		if (win->world_map[map_x][map_y] == 4)
 			col.integer = 0xffffff; //white
-		if (world_map[map_x][map_y] == 5)
+		if (win->world_map[map_x][map_y] == 5)
 			col.integer = 0xffff00; //yellow
 		if (side == 1)
 			col.integer /= 2;
 		breth_vertical(x, draw_start, draw_end, col, win);
 	}
+	old_time = time;
+	time = clock();
+	frame_time = (time - old_time) / CLOCKS_PER_SEC;
+	// printf("%f\n", 1/frame_time);
+	win->mv_sp = frame_time * 5;
+	win->rot_sp = frame_time * 3;
 	mlx_put_image_to_window(win->mlx_p, win->mlx_nw, win->mlx_img, 0, 0);
 	mlx_loop(win->mlx_p);
 }
 
 int		main(void)
 {
-	int world_map[MW][MH]=
+	t_data		win;
+	t_player	play;
+	int			map[MW][MH] = 
 	{
 		{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
 		{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
@@ -156,19 +138,24 @@ int		main(void)
 		{1,4,4,4,4,4,4,4,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
 		{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1}
 	};
-	t_player	pl;
-	t_data		win;
-	// double		time = 0;
-	// double		old_time = 0;
-
-	pl.pos.x = 22;
-	pl.pos.y = 12;
-	pl.dir.x = -1;
-	pl.dir.y = 0;
-	pl.cam_plane.x = 0;
-	pl.cam_plane.y = 0.65;
+	win.world_map = (int**)malloc(sizeof(int*) * MH);
+	int i = -1;
+	while (++i < MH)
+	{
+		int j = -1;
+		win.world_map[i] = (int*)malloc(sizeof(int) * MW);
+		while (++j < MW)
+			win.world_map[i][j] = map[i][j];
+	}
+	play.pos.x = 22;
+	play.pos.y = 12;
+	play.dir.x = -1;
+	play.dir.y = 0;
+	play.cam_plane.x = 0;
+	play.cam_plane.y = 0.65;
+	win.pl = &play;
 	win.ww = 800;
 	win.wh = 512;
 	open_win(&win);
-	raycast(pl, &win, world_map);
+	raycast(&win);
 }

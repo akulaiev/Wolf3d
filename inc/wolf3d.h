@@ -24,6 +24,7 @@
 # include <pthread.h>
 # include <sys/types.h>
 # include <unistd.h>
+# include <time.h>
 
 typedef struct	s_color
 {
@@ -39,19 +40,6 @@ typedef union	u_col
 	t_color			struct_col;
 }				t_col;
 
-typedef struct	s_data
-{
-	void			*mlx_p;
-	void			*mlx_nw;
-	void			*mlx_img;
-	char			*img_ptr;
-	int				bits_per_pixel;
-	int				size_line;
-	int				endian;
-	int				ww;
-	int				wh;
-}				t_data;
-
 typedef struct	s_dot
 {
 	double			x;
@@ -65,6 +53,22 @@ typedef struct	s_player
 	t_dot			cam_plane;
 }				t_player;
 
+typedef struct	s_data
+{
+	void			*mlx_p;
+	void			*mlx_nw;
+	void			*mlx_img;
+	char			*img_ptr;
+	int				bits_per_pixel;
+	int				size_line;
+	int				endian;
+	int				ww;
+	int				wh;
+	double			mv_sp;
+	double			rot_sp;
+	t_player		*pl;
+	int				**world_map;
+}				t_data;
 
 typedef struct	s_breth
 {
@@ -106,7 +110,11 @@ double			vs(t_dot first, t_dot second);
 t_dot			vr(t_dot vec, double angle);
 void			normalize(t_dot *ray);
 void			img_pixel_put(t_data *win, int x, int y, int col);
-
 void			breth_vertical(int x, int y_start, int y_end, t_col col, t_data *win);
+int				exit_x(void);
+int				key_react(int keycode, void *param);
+void			open_win(t_data *win);
+void			img_pixel_put(t_data *win, int x, int y, int col);
+void			raycast(t_data *win);
 
 #endif
