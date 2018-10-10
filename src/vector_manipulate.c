@@ -33,11 +33,13 @@ t_dot	vmn(t_dot first, t_dot second)
 t_dot	vr(t_dot vec, double angle)
 {
 	double	angle_rad;
+	double 	old_x;
 	t_dot	res;
 
 	angle_rad = angle * (M_PI / 180);
+	old_x = vec.x;
 	res.x = vec.x * cos(angle_rad) - vec.y * sin(angle_rad);
-	res.y = vec.x * sin(angle_rad) + cos(angle_rad);
+	res.y = old_x * sin(angle_rad) + cos(angle_rad);
 	return (res);
 }
 

@@ -43,3 +43,34 @@ void			breth_vertical(int x, int y_start, int y_end, t_col col, t_data *win)
 	brth.dy2 = brth.leng_y << 1;
 	pix_put_y(brth, col, win);
 }
+
+// static void		pix_put_x(t_breth brth, t_col col, t_data *win)
+// {
+// 	brth.len_x = brth.leng_x;
+// 	brth.d1 = brth.dy2 - brth.leng_x;
+// 	while (brth.leng_x--)
+// 	{
+// 		img_pixel_put(win, brth.x, brth.y, col.integer);
+// 		if (brth.d1 > 0)
+// 			brth.d1 -= brth.dx2;
+// 		brth.d1 += brth.dy2;
+// 		brth.x += brth.x_inc;
+// 	}
+// }
+
+// void			breth_horizontal(int y, int x_start, int x_end, t_col col, t_data *win)
+// {
+// 	t_breth		brth;
+
+// 	brth.dx = x_end - x_start;
+// 	brth.dy = y;
+// 	brth.leng_x = abs(brth.dx);
+// 	brth.leng_y = abs(brth.dy);
+// 	brth.x_inc = (brth.dx < 0) ? -1 : 1;
+// 	brth.length = fmax((float)brth.leng_x, (float)brth.leng_y) + 1;
+// 	brth.x = x_start;
+// 	brth.y = y;
+// 	brth.dx2 = brth.leng_x << 1;
+// 	brth.dy2 = brth.leng_y << 1;
+// 	pix_put_x(brth, col, win);
+// }

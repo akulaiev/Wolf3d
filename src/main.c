@@ -31,13 +31,11 @@ void	raycast(t_data *win)
 	int		draw_start;
 	int		draw_end;
 	t_col	col;
-	double	time;
-	double	old_time;
-	double	frame_time;
 
 	x = -1;
-	time = 0;
-	old_time = 0;
+	win->mlx_img = mlx_new_image(win->mlx_p, win->ww, win->wh);
+	win->img_ptr = mlx_get_data_addr(win->mlx_img,
+	&win->bits_per_pixel, &win->size_line, &win->endian);
 	while (++x < win->ww)
 	{
 		x_norm = 2 * x / (double)win->ww - 1;
@@ -97,12 +95,6 @@ void	raycast(t_data *win)
 			col.integer /= 2;
 		breth_vertical(x, draw_start, draw_end, col, win);
 	}
-	old_time = time;
-	time = clock();
-	frame_time = (time - old_time) / CLOCKS_PER_SEC;
-	// printf("%f\n", 1/frame_time);
-	win->mv_sp = frame_time * 5;
-	win->rot_sp = frame_time * 3;
 	mlx_put_image_to_window(win->mlx_p, win->mlx_nw, win->mlx_img, 0, 0);
 	mlx_loop(win->mlx_p);
 }
@@ -138,13 +130,13 @@ int		main(void)
 		{1,4,4,4,4,4,4,4,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
 		{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1}
 	};
-	win.world_map = (int**)malloc(sizeof(int*) * MH);
+	win.world_map = (int**)malloc(sizeof(int*) * MW);
 	int i = -1;
-	while (++i < MH)
+	while (++i < MW)
 	{
 		int j = -1;
-		win.world_map[i] = (int*)malloc(sizeof(int) * MW);
-		while (++j < MW)
+		win.world_map[i] = (int*)malloc(sizeof(int) * MH);
+		while (++j < MH)
 			win.world_map[i][j] = map[i][j];
 	}
 	play.pos.x = 22;
@@ -152,7 +144,7 @@ int		main(void)
 	play.dir.x = -1;
 	play.dir.y = 0;
 	play.cam_plane.x = 0;
-	play.cam_plane.y = 0.65;
+	play.cam_plane.y = 0.66;
 	win.pl = &play;
 	win.ww = 800;
 	win.wh = 512;

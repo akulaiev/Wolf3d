@@ -25,27 +25,50 @@ int			key_react(int keycode, void *param)
 
 	p = (t_data*)param;
 	play = p->pl;
-	// printf("%i\n", keycode);
 	if (keycode == 53)
 		exit(0);
-	else if (keycode == 126) //up arrow
+	if (keycode == 126) //up arrow
 	{
-		mlx_clear_window(p->mlx_p, p->mlx_nw);
-		if (!p->world_map[(int)(play->pos.x + play->dir.x * p->mv_sp)][(int)play->pos.y])
-			play->pos.x += play->dir.x * p->mv_sp;
-		if (!p->world_map[(int)play->pos.x][(int)(play->pos.y + play->dir.y * p->mv_sp)])
-			play->pos.y += play->dir.y * p->mv_sp;
-		printf("up: %f\n", play->pos.x);
+		mlx_destroy_image (p->mlx_p, p->mlx_img);
+		if (!p->world_map[(int)(play->pos.x + play->dir.x)][(int)play->pos.y] &&
+		play->pos.x + play->dir.x > 1)
+			play->pos.x += play->dir.x;
+		if (!p->world_map[(int)play->pos.x][(int)(play->pos.y + play->dir.y)] &&
+		play->pos.y + play->dir.y > 1)
+			play->pos.y += play->dir.y;
 		raycast(p);
 	}
 	else if (keycode == 125) //down arrow
 	{
-		mlx_clear_window(p->mlx_p, p->mlx_nw);
-		if (!p->world_map[(int)(play->pos.x - play->dir.x * p->mv_sp)][(int)play->pos.y])
-			play->pos.x -= play->dir.x * p->mv_sp;
-		if (!p->world_map[(int)play->pos.x][(int)(play->pos.y - play->dir.y * p->mv_sp)])
-			play->pos.y -= play->dir.y * p->mv_sp;
-		printf("down: %f\n", play->pos.x);
+		mlx_destroy_image (p->mlx_p, p->mlx_img);
+		if (!p->world_map[(int)(play->pos.x - play->dir.x)][(int)play->pos.y] &&
+		play->pos.x + play->dir.x < MW)
+			play->pos.x -= play->dir.x;
+		if (!p->world_map[(int)play->pos.x][(int)(play->pos.y - play->dir.y)] &&
+		play->pos.y + play->dir.y < MH)
+			play->pos.y -= play->dir.y;
+		raycast(p);
+	}
+	else if (keycode == 124) //right arrow
+	{
+		mlx_destroy_image (p->mlx_p, p->mlx_img);
+		double old_dir_x = play->dir.x;
+		play->dir.x = play->dir.x * cos(-0.3) - play->dir.y * sin(-0.3);
+		play->dir.y = old_dir_x * sin(-0.3) + play->dir.y * cos(-0.3);
+		double old_plane_x = play->cam_plane.x;
+		play->cam_plane.x = play->cam_plane.x * cos(-0.3) - play->cam_plane.y * sin(-0.3);
+		play->cam_plane.y = old_plane_x * sin(-0.3) + play->cam_plane.y * cos(-0.3);
+		raycast(p);
+	}
+	else if (keycode == 123) //left arrow
+	{
+		mlx_destroy_image (p->mlx_p, p->mlx_img);
+		double old_dir_x = play->dir.x;
+		play->dir.x = play->dir.x * cos(0.3) - play->dir.y * sin(0.3);
+		play->dir.y = old_dir_x * sin(0.3) + play->dir.y * cos(0.3);
+		double old_plane_x = play->cam_plane.x;
+		play->cam_plane.x = play->cam_plane.x * cos(0.3) - play->cam_plane.y * sin(0.3);
+		play->cam_plane.y = old_plane_x * sin(0.3) + play->cam_plane.y * cos(0.3);
 		raycast(p);
 	}
 	return (0);
@@ -55,9 +78,6 @@ void		open_win(t_data *win)
 {
 	win->mlx_p = mlx_init();
 	win->mlx_nw = mlx_new_window(win->mlx_p, win->ww, win->wh, "Test");
-	win->mlx_img = mlx_new_image(win->mlx_p, win->ww, win->wh);
-	win->img_ptr = mlx_get_data_addr(win->mlx_img,
-	&win->bits_per_pixel, &win->size_line, &win->endian);
 	mlx_hook(win->mlx_nw, 2, 5, key_react, (void*)win);
 	mlx_hook(win->mlx_nw, 17, 1L << 17, exit_x, (void*)win);
 }
