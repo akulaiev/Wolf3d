@@ -32,24 +32,24 @@ int			key_react(int keycode, void *param)
 		mlx_destroy_image (p->mlx_p, p->mlx_img);
 		if (!p->world_map[(int)(play->pos.x + play->dir.x)][(int)play->pos.y] &&
 		play->pos.x + play->dir.x > 1)
-			play->pos.x += play->dir.x;
+			play->pos.x += play->dir.x * 0.3;
 		if (!p->world_map[(int)play->pos.x][(int)(play->pos.y + play->dir.y)] &&
 		play->pos.y + play->dir.y > 1)
-			play->pos.y += play->dir.y;
+			play->pos.y += play->dir.y * 0.3;
 		raycast(p);
 	}
-	else if (keycode == 125) //down arrow
+	if (keycode == 125) //down arrow
 	{
 		mlx_destroy_image (p->mlx_p, p->mlx_img);
 		if (!p->world_map[(int)(play->pos.x - play->dir.x)][(int)play->pos.y] &&
 		play->pos.x + play->dir.x < MW)
-			play->pos.x -= play->dir.x;
+			play->pos.x -= play->dir.x * 0.3;
 		if (!p->world_map[(int)play->pos.x][(int)(play->pos.y - play->dir.y)] &&
 		play->pos.y + play->dir.y < MH)
-			play->pos.y -= play->dir.y;
+			play->pos.y -= play->dir.y * 0.3;
 		raycast(p);
 	}
-	else if (keycode == 124) //right arrow
+	if (keycode == 124) //right arrow
 	{
 		mlx_destroy_image (p->mlx_p, p->mlx_img);
 		double old_dir_x = play->dir.x;
@@ -60,7 +60,7 @@ int			key_react(int keycode, void *param)
 		play->cam_plane.y = old_plane_x * sin(-0.3) + play->cam_plane.y * cos(-0.3);
 		raycast(p);
 	}
-	else if (keycode == 123) //left arrow
+	if (keycode == 123) //left arrow
 	{
 		mlx_destroy_image (p->mlx_p, p->mlx_img);
 		double old_dir_x = play->dir.x;

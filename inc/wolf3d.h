@@ -14,6 +14,8 @@
 # define WOLF3D_H
 # define MW 24
 # define MH 24
+# define TW 64
+# define TH 64
 
 # include <stdlib.h>
 # include <fcntl.h>
