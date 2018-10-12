@@ -99,6 +99,39 @@ void	raycast(t_data *win)
 	mlx_loop(win->mlx_p);
 }
 
+int		**tex_gen(void)
+{
+	int 	**tex;
+	int		x;
+	int		y;
+
+	tex = (int**)malloc(sizeof(int*) * 8);
+	int i = -1;
+	while (++i < 8)
+		tex[i] = (int*)malloc(sizeof(int) * (TW * TH));
+	x = -1;
+	while (++x < TW)
+	{
+		y = -1;
+		while (++y < TH)
+		{
+			int xorcolor = (x * 256 / TW) ^ (y * 256 / TH);
+			//int xcolor = x * 256 / TW;
+			int ycolor = y * 256 / TH;
+			int xycolor = y * 128 / TH + x * 128 / TW;
+			tex[0][TW * y + x] = 65536 * 254 * (x != y && x != TW - y); //flat red texture with black cross
+			tex[1][TW * y + x] = xycolor + 256 * xycolor + 65536 * xycolor; //sloped greyscale
+			tex[2][TW * y + x] = 256 * xycolor + 65536 * xycolor; //sloped yellow gradient
+			tex[3][TW * y + x] = xorcolor + 256 * xorcolor + 65536 * xorcolor; //xor greyscale
+			tex[4][TW * y + x] = 256 * xorcolor; //xor green
+			tex[5][TW * y + x] = 65536 * 192 * (x % 16 && y % 16); //red bricks
+			tex[6][TW * y + x] = 65536 * ycolor; //red gradient
+			tex[7][TW * y + x] = 128 + 256 * 128 + 65536 * 128; //flat grey texture
+		}
+	}
+	return (tex);
+}
+
 int		main(void)
 {
 	t_data		win;
@@ -148,6 +181,8 @@ int		main(void)
 	win.pl = &play;
 	win.ww = 800;
 	win.wh = 512;
+
+	int	**texture = tex_gen();
 	open_win(&win);
 	raycast(&win);
 }
