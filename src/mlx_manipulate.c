@@ -29,6 +29,7 @@ int			key_react(int keycode, void *param)
 		exit(0);
 	if (keycode == 126) //up arrow
 	{
+		// mlx_clear_window(p->mlx_p, p->mlx_nw);
 		mlx_destroy_image (p->mlx_p, p->mlx_img);
 		if (!p->world_map[(int)(play->pos.x + play->dir.x)][(int)play->pos.y] &&
 		play->pos.x + play->dir.x > 1)
@@ -40,6 +41,7 @@ int			key_react(int keycode, void *param)
 	}
 	if (keycode == 125) //down arrow
 	{
+		// mlx_clear_window(p->mlx_p, p->mlx_nw);
 		mlx_destroy_image (p->mlx_p, p->mlx_img);
 		if (!p->world_map[(int)(play->pos.x - play->dir.x)][(int)play->pos.y] &&
 		play->pos.x + play->dir.x < MW)
@@ -51,6 +53,7 @@ int			key_react(int keycode, void *param)
 	}
 	if (keycode == 124) //right arrow
 	{
+		// mlx_clear_window(p->mlx_p, p->mlx_nw);
 		mlx_destroy_image (p->mlx_p, p->mlx_img);
 		double old_dir_x = play->dir.x;
 		play->dir.x = play->dir.x * cos(-0.3) - play->dir.y * sin(-0.3);
@@ -62,6 +65,7 @@ int			key_react(int keycode, void *param)
 	}
 	if (keycode == 123) //left arrow
 	{
+		// mlx_clear_window(p->mlx_p, p->mlx_nw);
 		mlx_destroy_image (p->mlx_p, p->mlx_img);
 		double old_dir_x = play->dir.x;
 		play->dir.x = play->dir.x * cos(0.3) - play->dir.y * sin(0.3);

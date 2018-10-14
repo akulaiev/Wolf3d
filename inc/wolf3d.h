@@ -48,6 +48,12 @@ typedef struct	s_dot
 	double			y;
 }				t_dot;
 
+typedef struct	s_dot_i
+{
+	int			x;
+	int			y;
+}				t_dot_i;
+
 typedef struct	s_player
 {
 	t_dot			pos;
@@ -70,6 +76,7 @@ typedef struct	s_data
 	double			rot_sp;
 	t_player		*pl;
 	int				**world_map;
+	t_col			**texture;
 }				t_data;
 
 typedef struct	s_breth
