@@ -99,7 +99,7 @@ void	raycast(t_data *win)
 		{
 			d = y * 256 - MH * 128 + line_h * 128;
 			tex.y = ((d * TH) / line_h) / 256;
-			col = win->texture[tex_num][TH * tex.x + tex.y];
+			col = win->texture[tex_num][TH * tex.y + tex.x];
 			if (side == 1)
 			{
 				col.struct_col.r /= 2;
