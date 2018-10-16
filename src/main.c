@@ -35,18 +35,18 @@ void	raycast(t_data *win)
 	t_dot_i	tex;
 	int		d;
 
-	x = -1;
 	win->mlx_img = mlx_new_image(win->mlx_p, win->ww, win->wh);
 	win->img_ptr = mlx_get_data_addr(win->mlx_img,
 	&win->bits_per_pixel, &win->size_line, &win->endian);
+	x = -1;
 	while (++x < win->ww)
 	{
 		x_norm = 2 * x / (double)win->ww - 1;
 		ray_dir = va(vm(win->pl->cam_plane, x_norm), win->pl->dir);
 		map.x = (int)win->pl->pos.x;
 		map.y = (int)win->pl->pos.y;
-		delta_dist.x = fabs(1 / ray_dir.x);
-		delta_dist.y = fabs(1 / ray_dir.y);
+		delta_dist.x = sqrt(1 + (ray_dir.y * ray_dir.y) / (ray_dir.x * ray_dir.x));
+		delta_dist.y = sqrt(1 + (ray_dir.x * ray_dir.x) / (ray_dir.y * ray_dir.y));
 		hit = 0;
 		if (ray_dir.x < 0 && (step.x = -1))
 			side_dist.x = (win->pl->pos.x - map.x) * delta_dist.x;
@@ -82,7 +82,7 @@ void	raycast(t_data *win)
 		if (draw_start < 0)
 			draw_start = 0;
 		draw_end = line_h / 2 + win->wh / 2;
-		if(draw_end >= win->wh)
+		if (draw_end >= win->wh)
 			draw_end = win->wh - 1;
 
 		tex_num = win->world_map[map.x][map.y] - 1;
@@ -97,12 +97,12 @@ void	raycast(t_data *win)
 		y = draw_start - 1;
 		while (++y < draw_end)
 		{
-			d = y * 256 - MH * 128 + line_h * 128;
+			d = y * 256 - win->wh * 128 + line_h * 128;
 			tex.y = ((d * TH) / line_h) / 256;
 			col = win->texture[tex_num][TH * tex.y + tex.x];
 			if (side == 1)
 			{
-				col.struct_col.r /= 2;
+				col.struct_col.r /= 2;                                                                                                                                                                                                                                                                                                                                 
 				col.struct_col.g /= 2;
 				col.struct_col.b /= 2;
 			}

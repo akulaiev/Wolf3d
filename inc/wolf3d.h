@@ -116,8 +116,6 @@ t_dot			vmn(t_dot first, t_dot second);
 t_dot			vm(t_dot first, double val);
 t_dot			vd(t_dot first, double val);
 double			vs(t_dot first, t_dot second);
-t_dot			vr(t_dot vec, double angle);
-void			normalize(t_dot *ray);
 void			img_pixel_put(t_data *win, int x, int y, int col);
 void			breth_vertical(int x, int y_start, int y_end, t_col col, t_data *win);
 int				exit_x(void);
