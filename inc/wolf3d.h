@@ -79,36 +79,25 @@ typedef struct	s_data
 	t_col			**texture;
 }				t_data;
 
-typedef struct	s_breth
+typedef struct	s_ray_cast
 {
-	int		dx;
-	int		dy;
-	int		dx2;
-	int		dy2;
-	int		leng_x;
-	int		leng_y;
-	int		length;
-	int		x_inc;
-	int		y_inc;
-	int		x;
-	int		y;
-	int		d1;
-	int		len_x;
-	int		len_y;
-}				t_breth;
-
-typedef	struct	s_gradient
-{
-	int		start_r;
-	int		start_g;
-	int		start_b;
-	int		end_r;
-	int		end_g;
-	int		end_b;
-	int		res_r;
-	int		res_g;
-	int		res_b;
-}				t_gradient;
+	double			x_norm;
+	t_dot			ray_dir;
+	t_dot_i			map;
+	t_dot			side_dist;
+	t_dot			delta_dist;
+	double			perp_wall_dist;
+	t_dot_i			step;
+	int				side;
+	int				line_h;
+	int				draw_start;
+	int				draw_end;
+	t_col			col;
+	int				tex_num;
+	double			wall_x;
+	t_dot_i			tex;
+	int				delta;
+}				t_ray_cast;
 
 
 t_dot			va(t_dot first, t_dot second);
@@ -117,7 +106,6 @@ t_dot			vm(t_dot first, double val);
 t_dot			vd(t_dot first, double val);
 double			vs(t_dot first, t_dot second);
 void			img_pixel_put(t_data *win, int x, int y, int col);
-void			breth_vertical(int x, int y_start, int y_end, t_col col, t_data *win);
 int				exit_x(void);
 int				key_react(int keycode, void *param);
 void			open_win(t_data *win);
