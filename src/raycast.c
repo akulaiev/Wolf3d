@@ -75,27 +75,10 @@ static void		get_textures_params(t_ray_cast *rc, t_data *win)
 	else
 		rc->wall_x = win->pl->pos.x + rc->perp_wall_dist * rc->ray_dir.x;
 	rc->wall_x -= floor(rc->wall_x);
-	rc->tex.x = (int)(rc->wall_x * (double)TW);
+	rc->tex.x = (int)(rc->wall_x * (double)win->tw);
 	if ((!rc->side && rc->ray_dir.x > 0) ||
 	(rc->side == 1 && rc->ray_dir.y < 0))
-		rc->tex.x = TW - rc->tex.x - 1;
-}
-
-static void		draw_y_stripe(t_ray_cast *rc, t_data *win, int x, int y)
-{
-	while (++y < rc->draw_end)
-	{
-		rc->delta = y * 256 - win->wh * 128 + rc->line_h * 128;
-		rc->tex.y = ((rc->delta * TH) / rc->line_h) / 256;
-		rc->col = win->texture[rc->tex_num][TH * rc->tex.y + rc->tex.x];
-		if (rc->side == 1)
-		{
-			rc->col.struct_col.r /= 2;
-			rc->col.struct_col.g /= 2;
-			rc->col.struct_col.b /= 2;
-		}
-		img_pixel_put(win, x, y, rc->col.integer);
-	}
+		rc->tex.x = win->tw - rc->tex.x - 1;
 }
 
 void			raycast(t_data *win)

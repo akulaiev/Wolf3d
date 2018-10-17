@@ -27,7 +27,7 @@ MLX_PATH = ./minilibx_macos/
 vpath %.c $(SRC_PATH)
 
 SOURCE = main.c raycast.c vector_operations.c \
-mlx_manipulate.c
+mlx_manipulate.c raycast_help.c
 
 O_FILES = $(addprefix $(SRC_PATH), $(SOURCE:.c=.o))
 

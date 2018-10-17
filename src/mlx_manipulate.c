@@ -15,6 +15,7 @@
 
 int			exit_x(void)
 {
+	// system("leaks wolf3d");
 	exit(0);
 }
 

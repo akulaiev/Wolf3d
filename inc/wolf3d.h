@@ -14,8 +14,6 @@
 # define WOLF3D_H
 # define MW 24
 # define MH 24
-# define TW 64
-# define TH 64
 
 # include <stdlib.h>
 # include <fcntl.h>
@@ -27,20 +25,6 @@
 # include <sys/types.h>
 # include <unistd.h>
 # include <time.h>
-
-typedef struct	s_color
-{
-	unsigned char	r;
-	unsigned char	g;
-	unsigned char	b;
-	unsigned char	a;
-}				t_color;
-
-typedef union	u_col
-{
-	unsigned int	integer;
-	t_color			struct_col;
-}				t_col;
 
 typedef struct	s_dot
 {
@@ -76,7 +60,9 @@ typedef struct	s_data
 	double			rot_sp;
 	t_player		*pl;
 	int				**world_map;
-	t_col			**texture;
+	int				**texture;
+	int				tw;
+	int				th;
 }				t_data;
 
 typedef struct	s_ray_cast
@@ -92,7 +78,7 @@ typedef struct	s_ray_cast
 	int				line_h;
 	int				draw_start;
 	int				draw_end;
-	t_col			col;
+	int				col;
 	int				tex_num;
 	double			wall_x;
 	t_dot_i			tex;
@@ -111,5 +97,6 @@ int				key_react(int keycode, void *param);
 void			open_win(t_data *win);
 void			img_pixel_put(t_data *win, int x, int y, int col);
 void			raycast(t_data *win);
+void			draw_y_stripe(t_ray_cast *rc, t_data *win, int x, int y);
 
 #endif

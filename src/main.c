@@ -13,37 +13,33 @@
 #include "wolf3d.h"
 #include <stdio.h>
 
-t_col		**tex_gen(void)
+void		tex_gen(t_data *w)
 {
-	t_col 	**tex;
-	int		x;
-	int		y;
+	char	**tex_names;
+	int		i;
+	int		bpp;
+	int		sl;
+	int		e;
 
-	tex = (t_col**)malloc(sizeof(t_col*) * 8);
-	int i = -1;
+	tex_names = (char**)malloc(sizeof(char*) * 8);
+	tex_names[0] = ft_strdup("./textures/colorstone.XPM");
+	tex_names[1] = ft_strdup("./textures/bluestone.XPM");
+	tex_names[2] = ft_strdup("./textures/greystone.XPM");
+	tex_names[3] = ft_strdup("./textures/mossy.XPM");
+	tex_names[4] = ft_strdup("./textures/purplestone.XPM");
+	tex_names[5] = ft_strdup("./textures/redbrick.XPM");
+	tex_names[6] = ft_strdup("./textures/wood.XPM");
+	tex_names[7] = ft_strdup("./textures/leaves.XPM");
+	w->texture = (int**)malloc(sizeof(int*) * 8);
+	i = -1;
 	while (++i < 8)
-		tex[i] = (t_col*)malloc(sizeof(t_col) * (TW * TH));
-	x = -1;
-	while (++x < TW)
 	{
-		y = -1;
-		while (++y < TH)
-		{
-			int xorcolor = (x * 256 / TW) ^ (y * 256 / TH);
-			// int xcolor = x * 256 / TW;
-			int ycolor = y * 256 / TH;
-			int xycolor = y * 128 / TH + x * 128 / TW;
-			tex[0][TW * y + x].integer = 0xff0000 * (x != y && x != TW - y); //flat red texture with black cross
-			tex[1][TW * y + x].integer = xycolor + 256 * xycolor + 65536 * xycolor; //sloped greyscale
-			tex[2][TW * y + x].integer = 256 * xycolor + 65536 * xycolor; //sloped yellow gradient
-			tex[3][TW * y + x].integer = xorcolor + 256 * xorcolor + 65536 * xorcolor; //xor greyscale
-			tex[4][TW * y + x].integer = 256 * xorcolor; //xor green
-			tex[5][TW * y + x].integer = 0xC00000 * (x % 16 && y % 16); //red bricks
-			tex[6][TW * y + x].integer = 65536 * ycolor; //red gradient
-			tex[7][TW * y + x].integer = 128 + 256 * 128 + 65536 * 128; //flat grey texture
-		}
+		w->texture[i] = (int*)mlx_xpm_file_to_image(w->mlx_p,
+		tex_names[i], &w->tw, &w->th);
+		w->texture[i] = (int*)mlx_get_data_addr(w->texture[i], &bpp, &sl, &e);
+		if (!w->texture[i])
+			exit(write(2, "Failed to upload texture!\n", 26));
 	}
-	return (tex);
 }
 
 int		main(void)
@@ -95,7 +91,7 @@ int		main(void)
 	win.pl = &play;
 	win.ww = 800;
 	win.wh = 512;
-	win.texture = tex_gen();
 	open_win(&win);
+	tex_gen(&win);
 	raycast(&win);
 }
