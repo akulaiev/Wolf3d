@@ -57,16 +57,14 @@ int		main(int argc, char **argv)
 	win.ww = 800;
 	win.wh = 512;
 	parser(&win, fd);
-	// play.pos.x = 22;
-	// play.pos.y = 11.5;
-	// play.dir.x = -1;
-	// play.dir.y = 0;
-	// play.cam_plane.x = 0;
-	// play.cam_plane.y = 0.66;
-	// win.pl = &play;
-	// win.ww = 800;
-	// win.wh = 512;
-	// open_win(&win);
-	// tex_gen(&win);
-	// raycast(&win);
+	play.pos.x = 22;
+	play.pos.y = 11.5;
+	play.dir.x = -1;
+	play.dir.y = 0;
+	play.cam_plane.x = 0;
+	play.cam_plane.y = 0.66;
+	win.pl = &play;
+	open_win(&win);
+	tex_gen(&win);
+	raycast(&win);
 }

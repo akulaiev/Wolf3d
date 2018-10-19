@@ -40,10 +40,10 @@ int			key_react(int keycode, void *param)
 	if (keycode == 125) //down arrow
 	{
 		if (!p->world_map[(int)(play->pos.x - play->dir.x)][(int)play->pos.y] &&
-		play->pos.x + play->dir.x < MW)
+		play->pos.x + play->dir.x < p->mw)
 			play->pos.x -= play->dir.x * 0.3;
 		if (!p->world_map[(int)play->pos.x][(int)(play->pos.y - play->dir.y)] &&
-		play->pos.y + play->dir.y < MH)
+		play->pos.y + play->dir.y < p->mh)
 			play->pos.y -= play->dir.y * 0.3;
 	}
 	if (keycode == 124) //right arrow

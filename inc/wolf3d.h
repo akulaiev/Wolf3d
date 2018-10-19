@@ -12,8 +12,6 @@
 
 #ifndef WOLF3D_H
 # define WOLF3D_H
-# define MW 24
-# define MH 24
 
 # include <stdlib.h>
 # include <fcntl.h>
