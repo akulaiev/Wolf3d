@@ -29,7 +29,7 @@ void		tex_gen(t_data *w)
 	tex_names[4] = ft_strdup("./textures/purplestone.XPM");
 	tex_names[5] = ft_strdup("./textures/redbrick.XPM");
 	tex_names[6] = ft_strdup("./textures/wood.XPM");
-	tex_names[7] = ft_strdup("./textures/leaves.XPM");
+	tex_names[7] = ft_strdup("./textures/glass.XPM");
 	w->texture = (int**)malloc(sizeof(int*) * 8);
 	i = -1;
 	while (++i < 8)
