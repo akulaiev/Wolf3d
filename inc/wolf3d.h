@@ -63,6 +63,8 @@ typedef struct	s_data
 	int				**texture;
 	int				tw;
 	int				th;
+	int				mw;
+	int				mh;
 }				t_data;
 
 typedef struct	s_ray_cast
@@ -85,6 +87,23 @@ typedef struct	s_ray_cast
 	int				delta;
 }				t_ray_cast;
 
+typedef struct	s_flr
+{
+	t_dot			flr_w;
+	t_dot			flr_c;
+	t_dot_i			flr_t;
+	double			dst_w;
+	double			dst_p;
+	double			dst_c;
+	double			coeff;
+}				t_flr;
+
+typedef struct	s_parce
+{
+	int			**map;
+	int			mw;
+	int			mh;
+}				t_parce;
 
 t_dot			va(t_dot first, t_dot second);
 t_dot			vmn(t_dot first, t_dot second);
@@ -98,5 +117,6 @@ void			open_win(t_data *win);
 void			img_pixel_put(t_data *win, int x, int y, int col);
 void			raycast(t_data *win);
 void			draw_y_stripe(t_ray_cast *rc, t_data *win, int x, int y);
+void			parser(t_data *win, int fd);
 
 #endif

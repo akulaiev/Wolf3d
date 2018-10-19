@@ -27,7 +27,7 @@ MLX_PATH = ./minilibx_macos/
 vpath %.c $(SRC_PATH)
 
 SOURCE = main.c raycast.c vector_operations.c \
-mlx_manipulate.c raycast_help.c
+mlx_manipulate.c raycast_help.c parser.c
 
 O_FILES = $(addprefix $(SRC_PATH), $(SOURCE:.c=.o))
 
@@ -44,7 +44,7 @@ LIBS:
 	$(CC) $(CFLAGS) -I $(INC_PATH) -c $< -o $@
 
 exe:
-	./$(NAME)
+	./$(NAME) ./maps/test_map
 
 clean:
 	make -C $(LIBFT_PATH) clean
