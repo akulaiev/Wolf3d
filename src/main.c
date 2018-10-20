@@ -39,7 +39,6 @@ void		tex_gen(t_data *w)
 		if (!w->texture[i])
 			exit(write(2, "Failed to upload texture!\n", 26));
 		w->texture[i] = (int*)mlx_get_data_addr(w->texture[i], &bpp, &sl, &e);
-		
 	}
 }
 
@@ -57,7 +56,7 @@ int		main(int argc, char **argv)
 	win.ww = 800;
 	win.wh = 512;
 	parser(&win, fd);
-	play.pos.x = 22;
+	play.pos.x = 15;
 	play.pos.y = 11.5;
 	play.dir.x = -1;
 	play.dir.y = 0;

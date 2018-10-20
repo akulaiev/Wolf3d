@@ -68,12 +68,14 @@ void			draw_y_stripe(t_ray_cast *rc, t_data *win, int x, int y)
 		tex_pix = win->th * rc->tex.y + rc->tex.x;
 		if (!rc->side && rc->ray_dir.x > 0)
 			rc->col = win->texture[rc->tex_num][tex_pix];
-		else if (!rc->side && rc->ray_dir.x < 0)
+		else if (!rc->side && rc->ray_dir.x < 0 && rc->tex_num - 1 >= 0)
 			rc->col = win->texture[rc->tex_num - 1][tex_pix];
-		else if (rc->side && rc->ray_dir.y > 0)
+		else if (rc->side && rc->ray_dir.y > 0 && rc->tex_num + 1 < 8)
 			rc->col = win->texture[rc->tex_num + 1][tex_pix];
-		else if (rc->side && rc->ray_dir.y < 0)
+		else if (rc->side && rc->ray_dir.y < 0 && rc->tex_num + 2 < 8)
 			rc->col = win->texture[rc->tex_num + 2][tex_pix];
+		else
+			rc->col = win->texture[rc->tex_num][tex_pix];
 		if (rc->side == 1)
 			rc->col = (rc->col >> 1) & 8355711;
 		img_pixel_put(win, x, y, rc->col);

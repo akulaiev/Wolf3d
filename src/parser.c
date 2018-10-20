@@ -72,7 +72,12 @@ static void	read_file(int fd, t_parce *res)
 				exit(write(2, "Problem with source_file!\n", 26));
 			}
 			if (ft_isdigit(tmp_line[j]))
+			{
 				res->map[res->mh][++k] = ft_atoi(&tmp_line[j]);
+				if (!res->map[res->mh][k] && (k == 0 || res->mh == 1
+				|| k == res->mw - 1))
+					res->map[res->mh][k] = 1;
+			}
 		}
 		mw_temp = k + 1;
 		if (mw_temp != res->mw)
@@ -83,6 +88,9 @@ static void	read_file(int fd, t_parce *res)
 		}
 		res->mh++;
 	}
+	// j = -1;
+	// while (++j < res->mw && !res->map[res->mh - 1][j])
+	// 	res->map[res->mh - 1][j] = 1;
 }
 
 void		parser(t_data *win, int fd)
@@ -90,6 +98,15 @@ void		parser(t_data *win, int fd)
 	t_parce		res;
 
 	read_file(fd, &res);
+	int i = -1;
+	while (++i < res.mh)
+	{
+		int j = -1;
+		while (++j < res.mw)
+			printf("%i", res.map[i][j]);
+		printf("\n");
+	}
+	exit(0);
 	win->mh = res.mh;
 	win->mw = res.mw;
 	win->world_map = res.map;
