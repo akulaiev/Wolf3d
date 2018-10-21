@@ -63,8 +63,9 @@ static void	read_file(int fd, t_parce *res)
 		k = -1;
 		while (tmp_line[++j])
 		{
-			if ((!ft_isdigit(tmp_line[j]) && tmp_line[j] != ' ')
-			|| (ft_isdigit(tmp_line[j]) && tmp_line[j + 1] != ' ' &&
+			if ((!ft_isdigit(tmp_line[j]) && tmp_line[j] != ' ') ||
+			(tmp_line[j] == ' ' && !ft_isdigit(tmp_line[j - 1])) ||
+			(ft_isdigit(tmp_line[j]) && tmp_line[j + 1] != ' ' &&
 			tmp_line[j + 1] != '\0'))
 			{
 				free(tmp_line);
@@ -74,7 +75,7 @@ static void	read_file(int fd, t_parce *res)
 			if (ft_isdigit(tmp_line[j]))
 			{
 				res->map[res->mh][++k] = ft_atoi(&tmp_line[j]);
-				if (!res->map[res->mh][k] && (k == 0 || res->mh == 1
+				if (!res->map[res->mh][k] && (k == 0 || res->mh == 0
 				|| k == res->mw - 1))
 					res->map[res->mh][k] = 1;
 			}
@@ -86,11 +87,15 @@ static void	read_file(int fd, t_parce *res)
 			ft_double_free((void**)res->map, res->mh);
 			exit(write(2, "Problem with source_file!\n", 26));
 		}
-		res->mh++;
+		if (ft_isdigit(tmp_line[0]))
+			res->mh++;
 	}
-	// j = -1;
-	// while (++j < res->mw && !res->map[res->mh - 1][j])
-	// 	res->map[res->mh - 1][j] = 1;
+	j = -1;
+	while (++j < res->mw)
+	{
+		if (!res->map[res->mh - 1][j])
+			res->map[res->mh - 1][j] = 1;
+	}
 }
 
 void		parser(t_data *win, int fd)
