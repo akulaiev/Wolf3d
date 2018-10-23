@@ -98,9 +98,11 @@ typedef struct	s_flr
 
 typedef struct	s_parce
 {
-	int			**map;
-	int			mw;
-	int			mh;
+	int				**map;
+	int				mw;
+	int				mh;
+	t_dot			pos;
+
 }				t_parce;
 
 t_dot			va(t_dot first, t_dot second);
