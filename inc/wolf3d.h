@@ -57,7 +57,7 @@ typedef struct	s_data
 	double			mv_sp;
 	double			rot_sp;
 	t_player		*pl;
-	int				**world_map;
+	int				**map;
 	int				**texture;
 	int				tw;
 	int				th;
@@ -104,6 +104,14 @@ typedef struct	s_parce
 	t_dot			pos;
 
 }				t_parce;
+
+typedef struct	s_read_file
+{
+	char			*tmp_line;
+	int				j;
+	int				k;
+	int				mw_temp;
+}				t_read_file;
 
 t_dot			va(t_dot first, t_dot second);
 t_dot			vmn(t_dot first, t_dot second);

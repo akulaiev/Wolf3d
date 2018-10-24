@@ -40,6 +40,7 @@ void		tex_gen(t_data *w)
 			exit(write(2, "Failed to upload texture!\n", 26));
 		w->texture[i] = (int*)mlx_get_data_addr(w->texture[i], &bpp, &sl, &e);
 	}
+	ft_double_free((void**)tex_names, 8);
 }
 
 int		main(int argc, char **argv)

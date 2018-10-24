@@ -49,7 +49,7 @@ static void		get_perp_wall(t_ray_cast *rc, t_data *win, int hit)
 			rc->map.y += rc->step.y;
 			rc->side = 1;
 		}
-		if (win->world_map[rc->map.x][rc->map.y] > 0)
+		if (win->map[rc->map.x][rc->map.y] > 0)
 			hit = 1;
 	}
 	if (!rc->side)
@@ -69,7 +69,7 @@ static void		get_textures_params(t_ray_cast *rc, t_data *win)
 	rc->draw_end = rc->line_h / 2 + win->wh / 2;
 	if (rc->draw_end >= win->wh)
 		rc->draw_end = win->wh - 1;
-	rc->tex_num = win->world_map[rc->map.x][rc->map.y] - 1;
+	rc->tex_num = win->map[rc->map.x][rc->map.y] - 1;
 	if (!rc->side)
 		rc->wall_x = win->pl->pos.y + rc->perp_wall_dist * rc->ray_dir.y;
 	else
