@@ -83,5 +83,15 @@ int				key_react(int keycode, void *param)
 		move(p, play, keycode);
 	if (keycode == 124 || keycode == 123)
 		turn_around(p, play, keycode);
+	if (keycode == 12)
+	{
+		if (p->tex_set == 0)
+			p->tex_set = 1;
+		else if (p->tex_set == 1)
+			p->tex_set = 0;
+		mlx_destroy_image(p->mlx_p, p->mlx_img);
+		tex_gen(p);
+		raycast(p);
+	}
 	return (0);
 }

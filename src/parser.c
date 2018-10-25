@@ -81,7 +81,7 @@ void			parser(t_data *win, int fd)
 	read_file(fd, &res);
 	win->mw = res.mh;
 	win->mh = res.mw;
-	win->pl->pos.x = res.pos.x;
-	win->pl->pos.y = res.pos.y;
+	win->pl->pos.x = res.pos.y + 0.5;
+	win->pl->pos.y = res.pos.x + 0.5;
 	win->map = res.map;
 }

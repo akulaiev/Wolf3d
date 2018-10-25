@@ -69,7 +69,10 @@ static void		get_textures_params(t_ray_cast *rc, t_data *win)
 	rc->draw_end = rc->line_h / 2 + win->wh / 2;
 	if (rc->draw_end >= win->wh)
 		rc->draw_end = win->wh - 1;
-	rc->tex_num = win->map[rc->map.x][rc->map.y] - 1;
+	if (win->map[rc->map.x][rc->map.y] < win->tex_n)
+		rc->tex_num = win->map[rc->map.x][rc->map.y] - 1;
+	else
+		rc->tex_num = win->tex_n - 1;
 	if (!rc->side)
 		rc->wall_x = win->pl->pos.y + rc->perp_wall_dist * rc->ray_dir.y;
 	else

@@ -23,6 +23,7 @@ int		main(int argc, char **argv)
 		return (write(2, "usage: ./wolf3d source_file\n", 28));
 	if ((fd = open(argv[1], O_RDONLY)) < 0)
 		return (write(2, "Source file doesn't exist!\n", 27));
+	win.pl = &play;
 	win.ww = 800;
 	win.wh = 512;
 	play.dir.x = -1;
@@ -30,7 +31,7 @@ int		main(int argc, char **argv)
 	play.cam_plane.x = 0;
 	play.cam_plane.y = 0.66;
 	win.pl = &play;
-	win.tex_set = 1;
+	win.tex_set = 0;
 	parser(&win, fd);
 	open_win(&win);
 	tex_gen(&win);

@@ -25,9 +25,10 @@ static void		draw_floor_help(t_data *win, int x, int y, t_flr f)
 		f.flr_c.y = f.coeff * f.flr_w.y + (1 - f.coeff) * win->pl->pos.y;
 		f.flr_t.x = (int)(f.flr_c.x * win->tw) % win->tw;
 		f.flr_t.y = (int)(f.flr_c.y * win->th) % win->th;
-		col = (win->texture[6][win->tw * f.flr_t.y + f.flr_t.x] >> 1) & 8355711;
+		col = (win->texture[win->tex_n][win->tw * f.flr_t.y + f.flr_t.x] >> 1)
+		& 8355711;
 		img_pixel_put(win, x, y, col);
-		col = (win->texture[7][win->tw * f.flr_t.y + f.flr_t.x]);
+		col = (win->texture[win->tex_n + 1][win->tw * f.flr_t.y + f.flr_t.x]);
 		img_pixel_put(win, x, win->wh - y, col);
 	}
 }
@@ -70,9 +71,9 @@ void			draw_y_stripe(t_ray_cast *rc, t_data *win, int x, int y)
 			rc->col = win->texture[rc->tex_num][tex_pix];
 		else if (!rc->side && rc->ray_dir.x < 0 && rc->tex_num - 1 >= 0)
 			rc->col = win->texture[rc->tex_num - 1][tex_pix];
-		else if (rc->side && rc->ray_dir.y > 0 && rc->tex_num + 1 < 8)
+		else if (rc->side && rc->ray_dir.y > 0 && rc->tex_num + 1 < win->tex_n)
 			rc->col = win->texture[rc->tex_num + 1][tex_pix];
-		else if (rc->side && rc->ray_dir.y < 0 && rc->tex_num + 2 < 8)
+		else if (rc->side && rc->ray_dir.y < 0 && rc->tex_num + 2 < win->tex_n)
 			rc->col = win->texture[rc->tex_num + 2][tex_pix];
 		else
 			rc->col = win->texture[rc->tex_num][tex_pix];

@@ -19,23 +19,6 @@ static char		**set_one(t_data *w)
 
 	w->tex_n = 6;
 	tex_names = (char**)malloc(sizeof(char*) * w->tex_n + 2);
-	tex_names[0] = ft_strdup("./my_textures/good_wood.XPM");
-	tex_names[1] = ft_strdup("./my_textures/colorful_smoke.XPM");
-	tex_names[2] = ft_strdup("./my_textures/lemons.XPM");
-	tex_names[3] = ft_strdup("./my_textures/flowers.XPM");
-	tex_names[4] = ft_strdup("./my_textures/poked_walls.XPM");
-	tex_names[5] = ft_strdup("./my_textures/old_bricks.XPM");
-	tex_names[6] = ft_strdup("./my_textures/wooden_floor.XPM");
-	tex_names[7] = ft_strdup("./my_textures/sunset_sky.XPM");
-	return (tex_names);
-}
-
-static char		**set_two(t_data *w)
-{	
-	char	**tex_names;
-
-	w->tex_n = 6;
-	tex_names = (char**)malloc(sizeof(char*) * w->tex_n + 2);
 	tex_names[0] = ft_strdup("./original_textures/bluestone.XPM");
 	tex_names[1] = ft_strdup("./original_textures/colorstone.XPM");
 	tex_names[2] = ft_strdup("./original_textures/greystone.XPM");
@@ -47,6 +30,23 @@ static char		**set_two(t_data *w)
 	return (tex_names);
 }
 
+static char		**set_two(t_data *w)
+{
+	char	**tex_names;
+
+	w->tex_n = 6;
+	tex_names = (char**)malloc(sizeof(char*) * w->tex_n + 2);
+	tex_names[0] = ft_strdup("./my_textures/good_wood.XPM");
+	tex_names[1] = ft_strdup("./my_textures/colorful_smoke.XPM");
+	tex_names[2] = ft_strdup("./my_textures/lemons.XPM");
+	tex_names[3] = ft_strdup("./my_textures/flowers.XPM");
+	tex_names[4] = ft_strdup("./my_textures/poked_walls.XPM");
+	tex_names[5] = ft_strdup("./my_textures/old_bricks.XPM");
+	tex_names[6] = ft_strdup("./my_textures/wooden_floor.XPM");
+	tex_names[7] = ft_strdup("./my_textures/sunset_sky.XPM");
+	return (tex_names);
+}
+
 void		tex_gen(t_data *w)
 {
 	char	**tex_names;
@@ -55,11 +55,13 @@ void		tex_gen(t_data *w)
 	int		sl;
 	int		e;
 
-	if (w->tex_set == 1)
+	if (w->tex_set == 0)
 		tex_names = set_one(w);
-	if (w->tex_set == 2)
+	if (w->tex_set == 1)
 		tex_names = set_two(w);
 	i = -1;
+	if (w->texture)
+		ft_double_free((void**)w->texture, w->tex_n);
 	w->texture = (int**)malloc(sizeof(int*) * w->tex_n + 2);
 	while (++i < w->tex_n + 2)
 	{
@@ -67,7 +69,6 @@ void		tex_gen(t_data *w)
 		tex_names[i], &w->tw, &w->th);
 		if (!w->texture[i])
 		{
-
 			ft_double_free((void**)tex_names, i);
 			exit(write(2, "Failed to upload texture!\n", 26));
 		}
