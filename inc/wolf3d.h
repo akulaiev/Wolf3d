@@ -59,6 +59,8 @@ typedef struct	s_data
 	t_player		*pl;
 	int				**map;
 	int				**texture;
+	int				tex_n;
+	int				tex_set;
 	int				tw;
 	int				th;
 	int				mw;
@@ -126,5 +128,8 @@ void			img_pixel_put(t_data *win, int x, int y, int col);
 void			raycast(t_data *win);
 void			draw_y_stripe(t_ray_cast *rc, t_data *win, int x, int y);
 void			parser(t_data *win, int fd);
+void			tex_gen(t_data *w);
+void			check_case_first(t_read_file rf, t_parce *res);
+void			check_other_cases(t_read_file rf, t_parce *res, int check_type);
 
 #endif
