@@ -19,14 +19,14 @@ static char		**set_one(t_data *w)
 
 	w->tex_n = 6;
 	tex_names = (char**)malloc(sizeof(char*) * w->tex_n + 2);
-	tex_names[0] = ft_strdup("./original_textures/bluestone.XPM");
-	tex_names[1] = ft_strdup("./original_textures/colorstone.XPM");
+	tex_names[0] = ft_strdup("./original_textures/redbrick.XPM");
+	tex_names[1] = ft_strdup("./original_textures/clay.XPM");
 	tex_names[2] = ft_strdup("./original_textures/greystone.XPM");
 	tex_names[3] = ft_strdup("./original_textures/mossy.XPM");
-	tex_names[4] = ft_strdup("./original_textures/purplestone.XPM");
-	tex_names[5] = ft_strdup("./original_textures/redbrick.XPM");
+	tex_names[4] = ft_strdup("./original_textures/bookshelf.XPM");
+	tex_names[5] = ft_strdup("./original_textures/colorstone.XPM");
 	tex_names[6] = ft_strdup("./original_textures/wood.XPM");
-	tex_names[7] = ft_strdup("./original_textures/glass.XPM");
+	tex_names[7] = ft_strdup("./original_textures/iron_block.XPM");
 	return (tex_names);
 }
 
