@@ -32,6 +32,7 @@ int		main(int argc, char **argv)
 	play.cam_plane.y = 0.66;
 	win.pl = &play;
 	win.tex_set = 0;
+	win.cw = 0;
 	parser(&win, fd);
 	open_win(&win);
 	tex_gen(&win);

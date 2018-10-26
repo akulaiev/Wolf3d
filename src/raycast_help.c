@@ -58,28 +58,31 @@ static void		draw_floor(t_ray_cast *rc, t_data *win, int x)
 	draw_floor_help(win, x, y, f);
 }
 
-void			draw_y_stripe(t_ray_cast *rc, t_data *win, int x, int y)
+void			draw_y_stripe(t_ray_cast *rc, t_data *w, int x, int y)
 {
 	int		tex_pix;
 
 	while (++y < rc->draw_end)
 	{
-		rc->delta = y * 256 - win->wh * 128 + rc->line_h * 128;
-		rc->tex.y = ((rc->delta * win->th) / rc->line_h) / 256;
-		tex_pix = win->th * rc->tex.y + rc->tex.x;
+		rc->delta = y * 256 - w->wh * 128 + rc->line_h * 128;
+		rc->tex.y = ((rc->delta * w->th) / rc->line_h) / 256;
+		tex_pix = w->th * rc->tex.y + rc->tex.x;
 		if (!rc->side && rc->ray_dir.x > 0)
-			rc->col = win->texture[rc->tex_num][tex_pix];
-		else if (!rc->side && rc->ray_dir.x < 0 && rc->tex_num - 1 >= 0)
-			rc->col = win->texture[rc->tex_num - 1][tex_pix];
-		else if (rc->side && rc->ray_dir.y > 0 && rc->tex_num + 1 < win->tex_n)
-			rc->col = win->texture[rc->tex_num + 1][tex_pix];
-		else if (rc->side && rc->ray_dir.y < 0 && rc->tex_num + 2 < win->tex_n)
-			rc->col = win->texture[rc->tex_num + 2][tex_pix];
+			rc->col = w->texture[rc->tex_num][tex_pix];
+		else if (!rc->side && rc->ray_dir.x < 0 &&
+		rc->tex_num - 1 >= 0 && w->cw)
+			rc->col = w->texture[rc->tex_num - 1][tex_pix];
+		else if (rc->side && rc->ray_dir.y > 0 &&
+		rc->tex_num + 1 < w->tex_n && w->cw)
+			rc->col = w->texture[rc->tex_num + 1][tex_pix];
+		else if (rc->side && rc->ray_dir.y < 0 &&
+		rc->tex_num + 2 < w->tex_n && w->cw)
+			rc->col = w->texture[rc->tex_num + 2][tex_pix];
 		else
-			rc->col = win->texture[rc->tex_num][tex_pix];
+			rc->col = w->texture[rc->tex_num][tex_pix];
 		if (rc->side == 1)
 			rc->col = (rc->col >> 1) & 8355711;
-		img_pixel_put(win, x, y, rc->col);
+		img_pixel_put(w, x, y, rc->col);
 	}
-	draw_floor(rc, win, x);
+	draw_floor(rc, w, x);
 }
