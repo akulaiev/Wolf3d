@@ -43,6 +43,14 @@ typedef struct	s_player
 	t_dot			cam_plane;
 }				t_player;
 
+typedef struct	s_key
+{
+	int				up;
+	int				down;
+	int				left;
+	int				right;
+}				t_key;
+
 typedef struct	s_data
 {
 	void			*mlx_p;
@@ -65,6 +73,7 @@ typedef struct	s_data
 	int				th;
 	int				mw;
 	int				mh;
+	t_key			*keys;
 }				t_data;
 
 typedef struct	s_ray_cast
@@ -131,5 +140,7 @@ void			parser(t_data *win, int fd);
 void			tex_gen(t_data *w);
 void			check_case_first(t_read_file rf, t_parce *res);
 void			check_other_cases(t_read_file rf, t_parce *res, int check_type);
+void			move(t_data *p, t_player *play);
+void			turn_around(t_data *p, t_player *play);
 
 #endif

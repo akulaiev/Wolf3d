@@ -13,9 +13,10 @@
 #include "wolf3d.h"
 #include <stdio.h>
 
-static void		move(t_data *p, t_player *play, int keycode)
+void		move(t_data *p, t_player *play)
 {
-	if (keycode == 126)
+	printf("here\n");
+	if (p->keys->up == 1)
 	{
 		if (!p->map[(int)(play->pos.x + play->dir.x)][(int)play->pos.y] &&
 		play->pos.x + play->dir.x * 0.3 > 1 &&
@@ -26,7 +27,7 @@ static void		move(t_data *p, t_player *play, int keycode)
 		play->pos.y + play->dir.y * 0.3 < p->mh)
 			play->pos.y += play->dir.y * 0.3;
 	}
-	if (keycode == 125)
+	if (p->keys->down == 1)
 	{
 		if (!p->map[(int)(play->pos.x - play->dir.x)][(int)play->pos.y] &&
 		play->pos.x - play->dir.x * 0.3 < p->mw &&
@@ -41,12 +42,12 @@ static void		move(t_data *p, t_player *play, int keycode)
 	raycast(p);
 }
 
-static void		turn_around(t_data *p, t_player *play, int keycode)
+void		turn_around(t_data *p, t_player *play)
 {
 	double dr_x;
 	double pln_x;
 
-	if (keycode == 124)
+	if (p->keys->left == 1)
 	{
 		dr_x = play->dir.x;
 		play->dir.x = play->dir.x * cos(-0.3) - play->dir.y * sin(-0.3);
@@ -56,7 +57,7 @@ static void		turn_around(t_data *p, t_player *play, int keycode)
 		play->cam_plane.y * sin(-0.3);
 		play->cam_plane.y = pln_x * sin(-0.3) + play->cam_plane.y * cos(-0.3);
 	}
-	if (keycode == 123)
+	if (p->keys->right == 1)
 	{
 		dr_x = play->dir.x;
 		play->dir.x = play->dir.x * cos(0.3) - play->dir.y * sin(0.3);
@@ -79,10 +80,14 @@ int				key_react(int keycode, void *param)
 	play = p->pl;
 	if (keycode == 53)
 		exit(0);
-	if (keycode == 126 || keycode == 125)
-		move(p, play, keycode);
-	if (keycode == 124 || keycode == 123)
-		turn_around(p, play, keycode);
+	if (keycode == 126)
+		p->keys->up = 1;
+	if (keycode == 125)
+		p->keys->down = 1;
+	if (keycode == 124)
+		p->keys->left = 1;
+	if (keycode == 123)
+		p->keys->right = 1;
 	if (keycode == 12)
 	{
 		if (p->tex_set == 0)

@@ -21,9 +21,20 @@ int			exit_x(void)
 
 void		open_win(t_data *win)
 {
+	t_key		k;
+
 	win->mlx_p = mlx_init();
 	win->mlx_nw = mlx_new_window(win->mlx_p, win->ww, win->wh, "Test");
+	k.up = -42;
+	k.down = 0;
+	k.left = 0;
+	k.right = 0;
+	win->keys = &k;
 	mlx_hook(win->mlx_nw, 2, 5, key_react, (void*)win);
+	if (win->keys->up == 1 || win->keys->down == 1)
+		move(win, win->pl);
+	if (win->keys->left == 1 || win->keys->right == 1)
+		turn_around(win, win->pl);
 	mlx_hook(win->mlx_nw, 17, 1L << 17, exit_x, (void*)win);
 }
 
