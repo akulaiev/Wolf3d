@@ -103,5 +103,4 @@ void			raycast(t_data *win)
 		draw_y_stripe(&rc, win, x, y);
 	}
 	mlx_put_image_to_window(win->mlx_p, win->mlx_nw, win->mlx_img, 0, 0);
-	mlx_loop(win->mlx_p);
 }

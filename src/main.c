@@ -37,4 +37,5 @@ int		main(int argc, char **argv)
 	open_win(&win);
 	tex_gen(&win);
 	raycast(&win);
+	mlx_loop(win.mlx_p);
 }

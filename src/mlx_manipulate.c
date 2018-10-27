@@ -19,13 +19,39 @@ int			exit_x(void)
 	exit(0);
 }
 
+int		key(t_data *win)
+{
+	if (win->keys->up == 1 || win->keys->down == 1)
+		move(win, win->pl);
+	if (win->keys->left == 1 || win->keys->right == 1)
+		turn_around(win, win->pl);
+	return (0);
+}
+
 void		open_win(t_data *win)
 {
+	t_key		k;
+
 	win->mlx_p = mlx_init();
 	win->mlx_nw = mlx_new_window(win->mlx_p, win->ww, win->wh, "Test");
-	mlx_hook(win->mlx_nw, 2, 5, key_react, (void*)win);
+	k.up = 0;
+	k.down = 0;
+	k.left = 0;
+	k.right = 0;
+	win->keys = &k;
+	mlx_hook(win->mlx_nw, 2, 5, key_down, (void*)win);
+	mlx_hook(win->mlx_nw, 3, 5, key_up, (void*)win);
+	mlx_loop_hook(win->mlx_p, key, win);
 	mlx_hook(win->mlx_nw, 17, 1L << 17, exit_x, (void*)win);
 }
+
+// void		open_win(t_data *win)
+// {
+// 	win->mlx_p = mlx_init();
+// 	win->mlx_nw = mlx_new_window(win->mlx_p, win->ww, win->wh, "Test");
+// 	mlx_hook(win->mlx_nw, 2, 5, key_react, (void*)win);
+// 	mlx_hook(win->mlx_nw, 17, 1L << 17, exit_x, (void*)win);
+// }
 
 void		img_pixel_put(t_data *win, int x, int y, int col)
 {
