@@ -25,6 +25,8 @@ int		key(t_data *win)
 		move(win, win->pl);
 	if (win->keys->left == 1 || win->keys->right == 1)
 		turn_around(win, win->pl);
+	mlx_destroy_image(win->mlx_p, win->mlx_img);
+	raycast(win);
 	return (0);
 }
 
@@ -44,14 +46,6 @@ void		open_win(t_data *win)
 	mlx_loop_hook(win->mlx_p, key, win);
 	mlx_hook(win->mlx_nw, 17, 1L << 17, exit_x, (void*)win);
 }
-
-// void		open_win(t_data *win)
-// {
-// 	win->mlx_p = mlx_init();
-// 	win->mlx_nw = mlx_new_window(win->mlx_p, win->ww, win->wh, "Test");
-// 	mlx_hook(win->mlx_nw, 2, 5, key_react, (void*)win);
-// 	mlx_hook(win->mlx_nw, 17, 1L << 17, exit_x, (void*)win);
-// }
 
 void		img_pixel_put(t_data *win, int x, int y, int col)
 {
