@@ -19,8 +19,8 @@ static void	free_and_exit(char *tmp_line, t_parce *res)
 		free(tmp_line);
 	if (res->mh > 0)
 	{
-		if (tmp_line[0])
-			res->mh++;
+		// if (tmp_line[0])
+		res->mh++;
 		ft_double_free((void**)res->map, res->mh);
 	}
 	system("leaks wolf3d");
@@ -77,6 +77,7 @@ void		check_other_cases(t_read_file rf, t_parce *res, int check_type)
 		|| res->pos.x >= res->mw - 1 || res->pos.y >= res->mh - 1)
 		{
 			res->mh--;
+			printf("here\n");
 			free_and_exit(l, res);
 		}
 	}
