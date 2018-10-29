@@ -83,6 +83,8 @@ int				key_down(int keycode, void *param)
 	t_data		*p;
 
 	p = (t_data*)param;
+	if (keycode == 12)
+		printf("%f %f\n", p->pl->pos.x, p->pl->pos.y);
 	if (keycode == 53)
 		exit(0);
 	if (keycode == 36)
@@ -95,10 +97,10 @@ int				key_down(int keycode, void *param)
 	}
 	if (keycode == 49)
 	{
-		if (!p->cw)
-			p->cw = 1;
+		if (!p->check_wall)
+			p->check_wall = 1;
 		else
-			p->cw = 0;
+			p->check_wall = 0;
 	}
 	else
 		key_down_help(keycode, p);

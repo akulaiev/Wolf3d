@@ -73,7 +73,7 @@ typedef struct	s_data
 	int				th;
 	int				mw;
 	int				mh;
-	int				cw;
+	int				check_wall;
 	t_key			*keys;
 }				t_data;
 

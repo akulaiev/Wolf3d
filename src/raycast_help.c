@@ -67,17 +67,17 @@ void			draw_y_stripe(t_ray_cast *rc, t_data *w, int x, int y)
 		rc->delta = y * 256 - w->wh * 128 + rc->line_h * 128;
 		rc->tex.y = ((rc->delta * w->th) / rc->line_h) / 256;
 		tex_pix = w->th * rc->tex.y + rc->tex.x;
-		if (!rc->side && rc->ray_dir.x > 0)
-			rc->col = w->texture[rc->tex_num][tex_pix];
-		else if (!rc->side && rc->ray_dir.x < 0 &&
-		rc->tex_num - 1 >= 0 && w->cw)
-			rc->col = w->texture[rc->tex_num - 1][tex_pix];
-		else if (rc->side && rc->ray_dir.y > 0 &&
-		rc->tex_num + 1 < w->tex_n && w->cw)
-			rc->col = w->texture[rc->tex_num + 1][tex_pix];
-		else if (rc->side && rc->ray_dir.y < 0 &&
-		rc->tex_num + 2 < w->tex_n && w->cw)
-			rc->col = w->texture[rc->tex_num + 2][tex_pix];
+		if (w->check_wall)
+		{
+			if (!rc->side && rc->ray_dir.x > 0)
+				rc->col = w->texture[0][tex_pix];
+			else if (!rc->side && rc->ray_dir.x < 0)
+				rc->col = w->texture[2][tex_pix];
+			else if (rc->side && rc->ray_dir.y > 0)
+				rc->col = w->texture[4][tex_pix];
+			else if (rc->side && rc->ray_dir.y < 0)
+				rc->col = w->texture[5][tex_pix];
+		}
 		else
 			rc->col = w->texture[rc->tex_num][tex_pix];
 		if (rc->side == 1)

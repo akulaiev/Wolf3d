@@ -61,7 +61,7 @@ void		tex_gen(t_data *w)
 		tex_names = set_two(w);
 	i = -1;
 	// if (w->tex_n)
-	// 	ft_double_free((void**)w->texture, w->tex_n);
+		// ft_double_free((void**)w->texture, w->tex_n);
 	w->texture = (int**)malloc(sizeof(int*) * w->tex_n + 2);
 	while (++i < w->tex_n + 2)
 	{

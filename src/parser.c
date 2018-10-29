@@ -18,14 +18,14 @@ static int		**realloc_2d(t_parce *res, char *l, int first_time, int i)
 	int		**new_mem;
 	int		j;
 
-	if (!res->mw)
+	new_mem = NULL;
+	if (!res->mw && (first_time = 1))
 	{
 		while (l[++i])
 		{
 			if (ft_isdigit(l[i]) && (l[i + 1] == ' ' || l[i + 1] == '\0'))
 				res->mw++;
 		}
-		first_time = 1;
 	}
 	new_mem = (int**)malloc(sizeof(int*) * res->mh + 1);
 	i = -1;
@@ -49,7 +49,8 @@ static void		read_file(int fd, t_parce *res)
 	rf.tmp_line = NULL;
 	while (get_next_line(fd, &rf.tmp_line))
 	{
-		res->map = realloc_2d(res, rf.tmp_line, 0, -1);
+		if (rf.tmp_line[0])
+			res->map = realloc_2d(res, rf.tmp_line, 0, -1);
 		rf.j = -1;
 		rf.k = -1;
 		while (rf.tmp_line[++rf.j])
