@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 
 #include "wolf3d.h"
-#include <stdio.h>
 
 static void		get_initial_params(t_ray_cast *rc, t_data *win, int x)
 {

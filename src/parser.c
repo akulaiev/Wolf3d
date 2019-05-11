@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 
 #include "wolf3d.h"
-#include <stdio.h>
 
 static int		**realloc_2d(t_parce *res, char *l, int first_time, int i)
 {

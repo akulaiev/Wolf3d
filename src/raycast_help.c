@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 
 #include "wolf3d.h"
-#include <stdio.h>
 
 static void		draw_floor_help(t_data *win, int x, int y, t_flr f)
 {
