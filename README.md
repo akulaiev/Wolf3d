@@ -6,6 +6,15 @@ To compile the executable, use Make. Then run it with one of the test files in t
 ```
 Usage: ./wolf3d maps/map_name
 ```
+# Map format
+'P' represents the player position, 0 is an empty space and other numbers from 1 to 6 - texture to display.
+
+```
+0 0 1 0 1
+0 0 0 0 0
+1 1 P 1 1
+0 0 1 0 0
+```
 
 # Controls:
 - Use arrows to navigate;
