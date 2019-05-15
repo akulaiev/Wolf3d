@@ -1,6 +1,10 @@
 # Wolf3d
 This project is a 3D representation of a maze inspired by Wolfenstein 3D video game, using ray-casting.
 
+<p align="center">
+<img src="https://github.com/akulaiev/Wolf3d/blob/master/demo.png" width="350">
+</p>
+
 # Running
 To compile the executable, use Make. Then run it with one of the test files in the "maps" directory from the root of this repository.
 ```
