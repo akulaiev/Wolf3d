@@ -25,6 +25,7 @@ int		main(int argc, char **argv)
 	win.pl = &play;
 	win.ww = 800;
 	win.wh = 512;
+	win.texture = NULL;
 	play.dir.x = -1;
 	play.dir.y = 0;
 	play.cam_plane.x = 0;

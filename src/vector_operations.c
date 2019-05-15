@@ -46,4 +46,3 @@ double	vs(t_dot first, t_dot second)
 	res = first.x * second.x + first.y * second.y;
 	return (res);
 }
-

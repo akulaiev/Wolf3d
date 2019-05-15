@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 
 #include "wolf3d.h"
-#include <stdio.h>
 
 void			move(t_data *p, t_player *play)
 {
@@ -83,8 +82,6 @@ int				key_down(int keycode, void *param)
 	t_data		*p;
 
 	p = (t_data*)param;
-	if (keycode == 12)
-		printf("%f %f\n", p->pl->pos.x, p->pl->pos.y);
 	if (keycode == 53)
 		exit(0);
 	if (keycode == 36)

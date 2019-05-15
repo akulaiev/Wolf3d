@@ -114,7 +114,7 @@ typedef struct	s_parce
 	int				mw;
 	int				mh;
 	t_dot			pos;
-
+	int				num_free;
 }				t_parce;
 
 typedef struct	s_read_file
@@ -125,13 +125,22 @@ typedef struct	s_read_file
 	int				mw_temp;
 }				t_read_file;
 
+typedef struct	s_set_tex
+{
+	char			**tn;
+	int				i;
+	int				bpp;
+	int				sl;
+	int				e;
+}				t_set_tex;
+
 t_dot			va(t_dot first, t_dot second);
 t_dot			vmn(t_dot first, t_dot second);
 t_dot			vm(t_dot first, double val);
 t_dot			vd(t_dot first, double val);
 double			vs(t_dot first, t_dot second);
 void			img_pixel_put(t_data *win, int x, int y, int col);
-int				exit_x(void);
+int				exit_x(void *param);
 int				key_react(int keycode, void *param);
 void			open_win(t_data *win);
 void			img_pixel_put(t_data *win, int x, int y, int col);

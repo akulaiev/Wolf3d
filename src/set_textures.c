@@ -35,43 +35,40 @@ static char		**set_two(t_data *w)
 
 	w->tex_n = 6;
 	tex_names = (char**)malloc(sizeof(char*) * w->tex_n + 2);
-	tex_names[0] = ft_strdup("./my_textures/good_wood.XPM");
-	tex_names[1] = ft_strdup("./my_textures/colorful_smoke.XPM");
-	tex_names[2] = ft_strdup("./my_textures/lemons.XPM");
-	tex_names[3] = ft_strdup("./my_textures/flowers.XPM");
-	tex_names[4] = ft_strdup("./my_textures/poked_walls.XPM");
-	tex_names[5] = ft_strdup("./my_textures/old_bricks.XPM");
-	tex_names[6] = ft_strdup("./my_textures/wooden_floor.XPM");
-	tex_names[7] = ft_strdup("./my_textures/sunset_sky.XPM");
+	tex_names[0] = ft_strdup("./fancy_tex/marble_dark.XPM");
+	tex_names[1] = ft_strdup("./fancy_tex/marbel.XPM");
+	tex_names[2] = ft_strdup("./fancy_tex/plaster.XPM");
+	tex_names[3] = ft_strdup("./fancy_tex/pink_tiles.XPM");
+	tex_names[4] = ft_strdup("./fancy_tex/poked_walls.XPM");
+	tex_names[5] = ft_strdup("./fancy_tex/blue_paint.XPM");
+	tex_names[6] = ft_strdup("./fancy_tex/white_wood.XPM");
+	tex_names[7] = ft_strdup("./fancy_tex/marbel_white.XPM");
 	return (tex_names);
 }
 
-void		tex_gen(t_data *w)
+void			tex_gen(t_data *w)
 {
-	char	**tex_names;
-	int		i;
-	int		bpp;
-	int		sl;
-	int		e;
+	t_set_tex		t;
 
 	if (w->tex_set == 0)
-		tex_names = set_one(w);
+		t.tn = set_one(w);
 	if (w->tex_set == 1)
-		tex_names = set_two(w);
-	i = -1;
-	// if (w->tex_n)
-		// ft_double_free((void**)w->texture, w->tex_n);
+		t.tn = set_two(w);
+	t.i = -1;
+	if (w->texture)
+		ft_double_free((void**)w->texture, w->tex_n + 2);
 	w->texture = (int**)malloc(sizeof(int*) * w->tex_n + 2);
-	while (++i < w->tex_n + 2)
+	while (++t.i < w->tex_n + 2)
 	{
-		w->texture[i] = (int*)mlx_xpm_file_to_image(w->mlx_p,
-		tex_names[i], &w->tw, &w->th);
-		if (!w->texture[i])
+		w->texture[t.i] = (int*)mlx_xpm_file_to_image(w->mlx_p,
+		t.tn[t.i], &w->tw, &w->th);
+		if (!w->texture[t.i])
 		{
-			ft_double_free((void**)tex_names, i);
+			ft_double_free((void**)t.tn, w->tex_n + 2);
 			exit(write(2, "Failed to upload texture!\n", 26));
 		}
-		w->texture[i] = (int*)mlx_get_data_addr(w->texture[i], &bpp, &sl, &e);
+		w->texture[t.i] = (int*)mlx_get_data_addr(w->texture[t.i],
+		&t.bpp, &t.sl, &t.e);
 	}
-	ft_double_free((void**)tex_names, w->tex_n + 2);
+	ft_double_free((void**)t.tn, w->tex_n + 2);
 }

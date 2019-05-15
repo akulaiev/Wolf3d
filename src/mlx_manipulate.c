@@ -12,13 +12,15 @@
 
 #include "wolf3d.h"
 
-int			exit_x(void)
+int			exit_x(void *param)
 {
-	system("leaks wolf3d");
+	t_data		*p;
+
+	p = (t_data*)param;
 	exit(0);
 }
 
-int		key(t_data *win)
+int			key(t_data *win)
 {
 	if (win->keys->up == 1 || win->keys->down == 1)
 		move(win, win->pl);
@@ -34,7 +36,7 @@ void		open_win(t_data *win)
 	t_key		k;
 
 	win->mlx_p = mlx_init();
-	win->mlx_nw = mlx_new_window(win->mlx_p, win->ww, win->wh, "Test");
+	win->mlx_nw = mlx_new_window(win->mlx_p, win->ww, win->wh, "Wolf3d");
 	k.up = 0;
 	k.down = 0;
 	k.left = 0;

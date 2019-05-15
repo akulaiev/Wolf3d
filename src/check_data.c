@@ -17,10 +17,7 @@ static void	free_and_exit(char *tmp_line, t_parce *res)
 	if (tmp_line && *tmp_line)
 		free(tmp_line);
 	if (res->mh > 0)
-	{
-		res->mh++;
-		ft_double_free((void**)res->map, res->mh);
-	}
+		ft_double_free((void**)res->map, res->num_free);
 	exit(write(2, "Problem with source_file!\n", 26));
 }
 
@@ -72,9 +69,6 @@ void		check_other_cases(t_read_file rf, t_parce *res, int check_type)
 		}
 		if (res->mw < 3 || res->mh < 3 || !res->pos.x || !res->pos.y
 		|| res->pos.x >= res->mw - 1 || res->pos.y >= res->mh - 1)
-		{
-			res->mh--;
 			free_and_exit(l, res);
-		}
 	}
 }

@@ -18,6 +18,7 @@ static int		**realloc_2d(t_parce *res, char *l, int first_time, int i)
 	int		j;
 
 	new_mem = NULL;
+	res->num_free++;
 	if (!res->mw && (first_time = 1))
 	{
 		while (l[++i])
@@ -28,12 +29,11 @@ static int		**realloc_2d(t_parce *res, char *l, int first_time, int i)
 	}
 	new_mem = (int**)malloc(sizeof(int*) * res->mh + 1);
 	i = -1;
-	while (++i <= res->mh + first_time)
+	while (++i <= res->mh + first_time && (j = -1))
 	{
 		new_mem[i] = (int*)malloc(sizeof(int) * res->mw);
 		if (first_time)
 			return (new_mem);
-		j = -1;
 		while (++j < res->mw && i < res->mh)
 			new_mem[i][j] = res->map[i][j];
 	}
@@ -46,7 +46,7 @@ static void		read_file(int fd, t_parce *res)
 	t_read_file		rf;
 
 	rf.tmp_line = NULL;
-	while (get_next_line(fd, &rf.tmp_line))
+	while (get_next_line(fd, &rf.tmp_line) > 0)
 	{
 		if (rf.tmp_line[0])
 			res->map = realloc_2d(res, rf.tmp_line, 0, -1);
@@ -78,6 +78,7 @@ void			parser(t_data *win, int fd)
 	res.pos.y = 0;
 	res.mh = 0;
 	res.mw = 0;
+	res.num_free = 0;
 	read_file(fd, &res);
 	win->mw = res.mh;
 	win->mh = res.mw;
